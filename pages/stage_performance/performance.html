@@ -360,48 +360,48 @@
         
             <!-- Bootstrap Modal for Add/Edit Product -->
             <div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="addProductModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="addProductModalLabel">Add New Product</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <form id="modalProductForm">
-                                <div class="mb-3">
-                                    <label for="modalProductName" class="form-label">Product Name</label>
-                                    <input type="text" class="form-control" id="modalProductName" placeholder="Enter fabric name">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="modalCategory" class="form-label">Category</label>
-                                    <select class="form-select" id="modalCategory">
-                                        <option value="Silk">Silk</option>
-                                        <option value="Cotton">Cotton</option>
-                                        <option value="Linen">Linen</option>
-                                        <option value="Wool">Wool</option>
-                                    </select>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="modalPrice" class="form-label">Price</label>
-                                    <input type="number" class="form-control" id="modalPrice" placeholder="Enter price per meter">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="modalStockQuantity" class="form-label">Stock Quantity</label>
-                                    <input type="number" class="form-control" id="modalStockQuantity" placeholder="Enter stock quantity">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="modalStatus" class="form-label">Status</label>
-                                    <select class="form-select" id="modalStatus">
-                                        <option value="Active">Active</option>
-                                        <option value="Inactive">Inactive</option>
-                                    </select>
-                                </div>
-                                <button type="button" class="btn btn-primary" onclick="saveProduct()">Save Product</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
+              <div class="modal-dialog">
+                  <div class="modal-content">
+                      <div class="modal-header">
+                          <h5 class="modal-title" id="addProductModalLabel">Add New Product</h5>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                          <form id="modalProductForm">
+                              <div class="mb-3">
+                                  <label for="modalProductName" class="form-label">Product Name</label>
+                                  <input type="text" class="form-control" id="modalProductName" placeholder="Enter fabric name">
+                              </div>
+                              <div class="mb-3">
+                                  <label for="modalCategory" class="form-label">Category</label>
+                                  <select class="form-select" id="modalCategory">
+                                      <option value="Silk">Silk</option>
+                                      <option value="Cotton">Cotton</option>
+                                      <option value="Linen">Linen</option>
+                                      <option value="Wool">Wool</option>
+                                  </select>
+                              </div>
+                              <div class="mb-3">
+                                  <label for="modalPrice" class="form-label">Price</label>
+                                  <input type="number" class="form-control" id="modalPrice" placeholder="Enter price per meter">
+                              </div>
+                              <div class="mb-3">
+                                  <label for="modalStockQuantity" class="form-label">Stock Quantity</label>
+                                  <input type="number" class="form-control" id="modalStockQuantity" placeholder="Enter stock quantity">
+                              </div>
+                              <div class="mb-3">
+                                  <label for="modalStatus" class="form-label">Status</label>
+                                  <select class="form-select" id="modalStatus">
+                                      <option value="Active">Active</option>
+                                      <option value="Inactive">Inactive</option>
+                                  </select>
+                              </div>
+                              <button type="button" class="btn btn-primary" onclick="saveProduct()">Save Product</button>
+                          </form>
+                      </div>
+                  </div>
+              </div>
+          </div>
             <!-- Analytics and Report Dashboard -->
             <div class="container">
               <h2 class="mb-4">Analytics and Reports Dashboard</h2>
@@ -527,26 +527,27 @@
                 }
         
                 function saveProduct() {
-                    const name = document.getElementById('modalProductName').value;
-                    const category = document.getElementById('modalCategory').value;
-                    const price = document.getElementById('modalPrice').value;
-                    const stock = document.getElementById('modalStockQuantity').value;
-                    const status = document.getElementById('modalStatus').value;
-        
-                    if (editingProductId) {
-                        // Update existing product
-                        const productIndex = products.findIndex(p => p.id === editingProductId);
-                        products[productIndex] = { id: editingProductId, name, category, price, stock, status };
-                        editingProductId = null;
-                    } else {
-                        // Add new product
-                        const newProduct = { id: products.length + 1, name, category, price, stock, status };
-                        products.push(newProduct);
-                    }
-        
-                    displayProducts();
-                    closeModal();
+                  const name = document.getElementById('modalProductName').value;
+                  const category = document.getElementById('modalCategory').value;
+                  const price = document.getElementById('modalPrice').value;
+                  const stock = document.getElementById('modalStockQuantity').value;
+                  const status = document.getElementById('modalStatus').value;
+                  if (editingProductId) {
+                    // Update existing product
+                    const productIndex = products.findIndex(p => p.id === editingProductId);
+                    products[productIndex] = { id: editingProductId, name, category, price, stock, status };
+                    editingProductId = null;
+                  } 
+                  else 
+                  {
+                    // Add new product
+                    const newProduct = { id: products.length + 1, name, category, price, stock, status };
+                    products.push(newProduct);
+                  }
+                  displayProducts();
+                  closeModal(); // Close the modal after saving
                 }
+
         
                 function editProduct(id) {
                     editingProductId = id;
@@ -570,38 +571,42 @@
                 }
         
                 function closeModal() {
-                    const modal = bootstrap.Modal.getInstance(document.getElementById('addProductModal'));
-                    modal.hide();
-                }
+                  const modal = bootstrap.Modal.getInstance(document.getElementById('addProductModal'));
+                  if (modal) 
+                  {
+                    modal.tooglehide(); // Close the modal properly
+                  }
+                  }
+
         
                 // Load products on page load
                 window.onload = displayProducts;
+                
                  // Sample Data for Charts
-        const salesData = [1200, 1500, 1800, 2200, 2400, 2700, 3000];
-        const topSellingProducts = ['Silk', 'Cotton', 'Linen', 'Wool', 'Polyester'];
-        const topSellingQuantities = [120, 100, 80, 60, 40];
-        const newCustomers = 300;
-        const returningCustomers = 500;
+                const salesData = [1200, 1500, 1800, 2200, 2400, 2700, 3000];
+                const topSellingProducts = ['Silk', 'Cotton', 'Linen', 'Wool', 'Polyester'];
+                const topSellingQuantities = [120, 100, 80, 60, 40];
+                const newCustomers = 300;
+                const returningCustomers = 500;
 
-        const lowStockProducts = [
-            { id: 1, name: 'Silk Fabric', stock: 5 },
-            { id: 2, name: 'Cotton Fabric', stock: 8 },
-            { id: 3, name: 'Linen Fabric', stock: 12 }
-        ];
+                const lowStockProducts = [
+                  { id: 1, name: 'Silk Fabric', stock: 5 },
+                  { id: 2, name: 'Cotton Fabric', stock: 8 },
+                  { id: 3, name: 'Linen Fabric', stock: 12 }
+                ];
 
-        const inactiveCustomers = [
-            { id: 1, name: 'Raymond Groups', lastPurchase: '30%' },
-            { id: 2, name: 'Bombay Deying', lastPurchase: '30%' },
-            { id: 3, name: 'Trident Ltd', lastPurchase: '40%' }
-        ];
+              const inactiveCustomers = [
+                { id: 1, name: 'Raymond Groups', lastPurchase: '30%' },
+                { id: 2, name: 'Bombay Deying', lastPurchase: '30%' },
+                { id: 3, name: 'Trident Ltd', lastPurchase: '40%' }
+              ];
+              const returnRates = [5, 10, 7, 3, 2];
 
-        const returnRates = [5, 10, 7, 3, 2];
-
-        // Sales Trend Chart
-        const ctxSalesTrend = document.getElementById('salesTrendChart').getContext('2d');
-        const salesTrendChart = new Chart(ctxSalesTrend, {
-            type: 'line',
-            data: {
+              // Sales Trend Chart
+              const ctxSalesTrend = document.getElementById('salesTrendChart').getContext('2d');
+              const salesTrendChart = new Chart(ctxSalesTrend, {
+                type: 'line',
+                data: {
                 labels: ['January', 'February', 'March', 'April', 'May', 'June'],
                 datasets: [{
                     label: 'Total Sales',
@@ -705,7 +710,8 @@
                 }
             }
         });
-            </script>
+        
+        </script>
         
   
           <!-- content-wrapper ends -->
